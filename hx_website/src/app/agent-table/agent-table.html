@@ -6,12 +6,12 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover table-bordered align-middle mb-0 custom-table text-center">
+        <table class="table table-hover table-bordered align-middle mb-0 custom-table text-start">
             <thead class="table-light">
                 <tr>
                     <th *ngFor="let col of columns" (click)="sortBy(col)"
-                        class="fw-semibold text-secondary border-end text-center" style="cursor: pointer;">
-                        <div class="d-flex align-items-center justify-content-center">
+                        class="fw-semibold text-secondary border-end text-start" style="cursor: pointer;">
+                        <div class="d-flex align-items-start justify-content-start">
                             <span>{{ col }}</span>
                             <i class="ms-2 sort-icon" [ngClass]="{
                 'bi bi-arrow-up': sortKey === col && sortAsc,
@@ -25,7 +25,7 @@
 
             <tbody>
                 <tr *ngFor="let row of filteredData">
-                    <td *ngFor="let col of columns" class="align-middle border-end text-center">
+                    <td *ngFor="let col of columns" class="align-middle border-end text-start">
                         {{ row[col] }}
                     </td>
                 </tr>

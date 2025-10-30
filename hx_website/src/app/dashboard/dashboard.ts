@@ -7,6 +7,15 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ApiService } from '../services/api.service';
 import { AgentTable } from '../agent-table/agent-table';
 
+export interface FilterCount {
+  agent_count: number | null;
+  hx_transaction?: number | null;
+  hx_transaction_revenue?: number | null;
+  hx_contact?: number | null;
+  not_in_hx_contact?: number | null;
+}
+
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -21,13 +30,15 @@ export class Dashboard implements OnInit {
 
   filters: any[] = [];
   selectedFilters: any = {};
-  agent_count: number | null = null;
+  // agent_count: number | null = null;
+  filterCount: FilterCount = { agent_count: null, hx_transaction: null, hx_transaction_revenue: null, hx_contact: null, not_in_hx_contact: null };
   columns: string[] = [];
   agents: any[] = [];
   showTable = false;
 
   @ViewChild('resultSection') resultSection!: ElementRef;
   @ViewChild('agentDetailsSection') agentDetailsSection!: ElementRef;
+  @ViewChild(AgentTable) agentTable!: AgentTable;
 
   ngOnInit(): void {
     this.getFilters();
@@ -57,8 +68,12 @@ export class Dashboard implements OnInit {
     this.apiCallingService.getAgents(this.selectedFilters).subscribe({
       next: (response: any) => {
         this.spinner.hide();
-        this.agent_count = response?.agent_count ?? 0;
+        this.showTable = false;
+
+        // this.agent_count = response?.agent_count ?? 0;
+        this.filterCount.agent_count = response?.agent_count ?? 0;
         this.toastr.success('Filters applied!', 'Success');
+        this.agentTable?.clearSearch();
 
         setTimeout(() => {
           this.resultSection?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -73,14 +88,15 @@ export class Dashboard implements OnInit {
 
   clearFilters(): void {
     this.selectedFilters = {};
-    this.agent_count = null;
+    this.filterCount.agent_count = null;
     this.showTable = false;
     this.columns = [];
     this.agents = [];
     this.toastr.info('Filters cleared!', 'Notice');
   }
 
-  getAgentDetails() {
+  getAgentDetails(filterType: string): void {
+    this.selectedFilters['extra_filter'] = filterType;
     this.apiCallingService.getAgentDetails(this.selectedFilters).subscribe({
       next: (res: any) => {
         this.columns = res.columns;

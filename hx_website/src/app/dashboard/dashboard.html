@@ -54,19 +54,57 @@
                 </div>
 
                 <!-- 🌟 Result Section -->
-                <div #resultSection *ngIf="agent_count !== null"
+                <div #resultSection *ngIf="filterCount?.agent_count !== null"
                     class="result-section mt-3 p-4 rounded-4 text-center shadow-lg animate__animated animate__fadeInUp">
-
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h4 class="fw-bold text-primary mb-0">Agents Found</h4>
-                        <button class="btn btn-primary btn-sm shadow-sm px-3" (click)="getAgentDetails()">
-                            <i class="bi bi-people-fill me-1"></i>View Agents Details
-                        </button>
                     </div>
 
-                    <h2 class="display-5 fw-bold text_agent">{{ agent_count }}</h2>
-                    <p class="text-muted">based on your selected filters</p>
+                    <div class="d-flex flex-wrap justify-content-center align-items-center custom-gap mt-5">
+                        <!-- Overall -->
+                        <div *ngIf="filterCount?.agent_count !== null">
+                            <h4 class="text-secondary fw-semibold mb-1">Overall</h4>
+                            <h2 class="display-6 fw-bold text_agent cursor-pointer mb-0"
+                                (click)="getAgentDetails('Overall')">
+                                {{ filterCount?.agent_count }}
+                            </h2>
+                        </div>
+
+                        <!-- HX Transaction -->
+                        <div *ngIf="filterCount?.hx_transaction !== null && filterCount?.hx_transaction !== undefined">
+                            <h4 class="text-secondary fw-semibold mb-1">HX Transaction</h4>
+                            <h2 class="display-6 fw-bold text_agent mb-0 cursor-pointer"
+                                (click)="getAgentDetails('HX Transaction')">{{ filterCount?.hx_transaction }}</h2>
+                        </div>
+
+                        <!-- HX Transaction (Revenue > 0) -->
+                        <div
+                            *ngIf="filterCount?.hx_transaction_revenue !== null && filterCount?.hx_transaction_revenue !== undefined">
+                            <h4 class="text-secondary fw-semibold mb-1">HX Transaction (Revenue > 0)</h4>
+                            <h2 class="display-6 fw-bold text_agent mb-0 cursor-pointer"
+                                (click)="getAgentDetails('HX Transaction (Revenue > 0)')">{{
+                                filterCount?.hx_transaction_revenue }}</h2>
+                        </div>
+
+                        <!-- HX Contact -->
+                        <div *ngIf="filterCount?.hx_contact !== null && filterCount?.hx_contact !== undefined">
+                            <h4 class="text-secondary fw-semibold mb-1">HX Contact</h4>
+                            <h2 class="display-6 fw-bold text_agent mb-0 cursor-pointer"
+                                (click)="getAgentDetails('HX Contact')">{{ filterCount?.hx_contact }}</h2>
+                        </div>
+
+                        <!-- Not in HX Contact -->
+                        <div
+                            *ngIf="filterCount?.not_in_hx_contact !== null && filterCount?.not_in_hx_contact !== undefined">
+                            <h4 class="text-secondary fw-semibold mb-1">Not in HX Contact</h4>
+                            <h2 class="display-6 fw-bold text_agent mb-0 cursor-pointer"
+                                (click)="getAgentDetails('Not in HX Contact')">{{ filterCount?.not_in_hx_contact }}</h2>
+                        </div>
+                    </div>
+
+                    <p class="text-muted mt-5">based on your selected filters</p>
                 </div>
+
 
                 <!-- Agents Details table -->
                 <div #agentDetailsSection *ngIf="showTable" class="mt-4">

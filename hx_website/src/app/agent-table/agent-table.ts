@@ -50,4 +50,9 @@ export class AgentTable {
       this.sortAsc = true;
     }
   }
+
+  clearSearch() {
+    this.searchTerm = '';
+  }
+
 }

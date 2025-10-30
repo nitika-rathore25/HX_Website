@@ -118,3 +118,8 @@
 .text_agent {
     color: #952EF9;
 }
+
+.custom-gap {
+    gap: 6rem !important;
+    /* or try 5rem for more space */
+}
