@@ -1,0 +1,120 @@
+/* Header Styling */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+    background: #fff;
+}
+
+
+/* Background Gradient */
+.page-bg {
+    min-height: 90vh;
+}
+
+/* Card Styling */
+.card {
+    border-radius: 16px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ng-select Customizations */
+.ng-select.custom-select {
+    width: 100%;
+}
+
+.ng-select .ng-select-container {
+    border-radius: 12px !important;
+    border: 1px solid #cfd8dc !important;
+    min-height: 45px;
+}
+
+.ng-select .ng-value {
+    background-color: #e8f4ff !important;
+    border-radius: 8px;
+    color: #007bff;
+    font-weight: 500;
+    padding: 4px 10px;
+}
+
+.ng-select .ng-value-icon {
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #0D6EFD;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #5a9bc6;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f2f2f2;
+}
+
+/* Info icon */
+.bi-info-circle {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.bi-info-circle:hover {
+    color: #0D6EFD;
+}
+
+.text-primary {
+    color: #0D6EFD !important;
+}
+
+.parent::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6);
+    /* light overlay */
+    backdrop-filter: blur(3px);
+    z-index: 0;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+}
+
+.parent {
+    background: url('/bg.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.clear_btn {
+    border-color: #0D6EFD;
+    color: #0D6EFD;
+    transition: all 0.3s ease;
+}
+
+.result-section {
+    background: linear-gradient(150deg, #FFEDC0, #FBBBFD);
+    border: 2px solid #FBBBFD;
+    transition: all 0.4s ease-in-out;
+}
+
+.text_agent {
+    color: #952EF9;
+}

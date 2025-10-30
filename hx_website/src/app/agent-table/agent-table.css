@@ -1,0 +1,8 @@
+th:hover {
+    background-color: #f8f9fa;
+    transition: 0.2s;
+}
+
+input.form-control {
+    border-radius: 10px;
+}
