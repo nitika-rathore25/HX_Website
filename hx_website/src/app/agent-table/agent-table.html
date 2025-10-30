@@ -1,36 +1,32 @@
-<div class="card shadow-sm border-0 rounded-4 p-3 animate__animated animate__fadeInUp">
+<div class="card shadow-sm border-0 rounded-4 p-4 animate__animated animate__fadeInUp">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="fw-bold text-primary mb-0">Agent Details</h5>
-        <input type="text" class="form-control w-25" placeholder="Search..." [(ngModel)]="searchTerm" />
+        <input type="text" class="form-control w-25 shadow-sm rounded-3" placeholder="Search..."
+            [(ngModel)]="searchTerm" />
     </div>
 
     <div class="table-responsive">
-        <table class="table align-middle table-hover text-center mb-0">
+        <table class="table align-middle table-hover mb-0">
             <thead class="table-light">
                 <tr>
-                    <th *ngFor="let col of columns" (click)="sortBy(col)" class="fw-semibold text-secondary"
+                    <th *ngFor="let col of columns" (click)="sortBy(col)" class="fw-semibold text-secondary text-start"
                         style="cursor: pointer;">
-                        <div class="d-flex justify-content-center align-items-center">
+                        <div class="d-flex align-items-center justify-content-start">
                             <span>{{ col }}</span>
-                            <i class="ms-2" [ngClass]="{
+                            <i class="ms-2 sort-icon" [ngClass]="{
                   'bi bi-arrow-up': sortKey === col && sortAsc,
                   'bi bi-arrow-down': sortKey === col && !sortAsc,
-                  'bi bi-arrow-down-up': sortKey !== col
+                  'bi bi-arrow-down-up text-muted': sortKey !== col
                 }"></i>
                         </div>
                     </th>
                 </tr>
             </thead>
+
             <tbody>
                 <tr *ngFor="let row of filteredData">
-                    <td *ngFor="let col of columns">
-                        <ng-container *ngIf="col.toLowerCase() === 'email'; else normalCell">
-                            <a [href]="'mailto:' + row[col]" class="text-primary text-decoration-none">{{ row[col]
-                                }}</a>
-                        </ng-container>
-                        <ng-template #normalCell>
-                            {{ row[col] }}
-                        </ng-template>
+                    <td *ngFor="let col of columns" class="text-start align-middle">
+                        {{ row[col] }}
                     </td>
                 </tr>
             </tbody>

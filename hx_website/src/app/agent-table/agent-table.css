@@ -6,3 +6,8 @@ th:hover {
 input.form-control {
     border-radius: 10px;
 }
+
+td {
+    color: #353131 !important;
+    font-size: medium;
+}
