@@ -6,6 +6,7 @@ import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ApiService } from '../services/api.service';
 import { AgentTable } from '../agent-table/agent-table';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 export interface FilterCount {
   agent_count: number | null;
@@ -22,6 +23,13 @@ export interface FilterCount {
   imports: [CommonModule, FormsModule, NgSelectModule, NgxSpinnerComponent, ToastrModule, AgentTable],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
+  animations: [
+    trigger('expandCollapse', [
+      state('void', style({ height: '0', opacity: 0 })),
+      state('*', style({ height: '*', opacity: 1 })),
+      transition('void <=> *', animate('250ms ease-in-out'))
+    ])
+  ]
 })
 export class Dashboard implements OnInit {
   private apiCallingService = inject(ApiService);
@@ -35,13 +43,26 @@ export class Dashboard implements OnInit {
   columns: string[] = [];
   agents: any[] = [];
   showTable = false;
+  isExpanded = true;
+  clickedKey: string | null = null;
+  animatedValues: { [key in keyof FilterCount]?: number } = {};
 
   @ViewChild('resultSection') resultSection!: ElementRef;
   @ViewChild('agentDetailsSection') agentDetailsSection!: ElementRef;
   @ViewChild(AgentTable) agentTable!: AgentTable;
 
+  objectKeys(obj: any): string[] {
+    return Object.keys(obj).filter(key => key !== 'extra_filter');
+  }
+
+
+
   ngOnInit(): void {
     this.getFilters();
+  }
+
+  togglePanel(): void {
+    this.isExpanded = !this.isExpanded;
   }
 
   getFilters(): void {
@@ -57,6 +78,36 @@ export class Dashboard implements OnInit {
       },
     });
   }
+
+
+  private animateValue(
+    key: keyof FilterCount,
+    start: number,
+    end: number,
+    duration = 800
+  ): void {
+    const range = end - start;
+    if (range === 0) return;
+    const startTime = performance.now();
+
+    const step = (currentTime: number) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      this.animatedValues[key] = Math.round(start + range * progress);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+
+  private updateAnimatedCounts(): void {
+    (Object.keys(this.filterCount) as (keyof FilterCount)[]).forEach((key) => {
+      const endValue = this.filterCount[key];
+      if (endValue !== undefined && endValue !== null) {
+        this.animateValue(key, this.animatedValues[key] || 0, endValue);
+      }
+    });
+  }
+
 
   applyFilters(): void {
     this.spinner.show();
@@ -77,7 +128,9 @@ export class Dashboard implements OnInit {
         this.filterCount.hx_transaction_revenue = response?.hx_transaction_revenue;
         this.filterCount.not_in_hx_contact = response?.not_in_hx_contact;
         this.toastr.success('Filters applied!', 'Success');
+        this.updateAnimatedCounts();
         this.agentTable?.clearSearch();
+        this.isExpanded = false;
 
         setTimeout(() => {
           this.resultSection?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -103,20 +156,27 @@ export class Dashboard implements OnInit {
     this.toastr.info('Filters cleared!', 'Notice');
   }
 
+
+
   getAgentDetails(filterType: string): void {
     this.selectedFilters['extra_filter'] = filterType;
+    this.spinner.show();
+    this.clickedKey = filterType; // highlight clicked box
+    setTimeout(() => (this.clickedKey = null), 800);
     this.apiCallingService.getAgentDetails(this.selectedFilters).subscribe({
       next: (res: any) => {
         this.columns = res.columns;
         this.agents = res.data;
         this.showTable = true;
+
         this.toastr.success('Agent details fetched!', 'Success');
         setTimeout(() => {
           this.agentDetailsSection.nativeElement.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
           });
-        }, 100);
+        }, 50);
+        this.spinner.hide();
       },
     });
   }

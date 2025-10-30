@@ -17,7 +17,7 @@
 .card {
     border-radius: 16px;
     background-color: #fff;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
     z-index: 100;
 }
 
@@ -122,4 +122,88 @@
 .custom-gap {
     gap: 6rem !important;
     /* or try 5rem for more space */
+}
+
+
+.count-box {
+    min-width: 200px;
+    height: 150px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.count-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.text_agent {
+    color: #2062AC;
+    cursor: pointer;
+}
+
+.text_agent:hover {
+    color: #FEA940;
+}
+
+
+
+.custom-select ::ng-deep .ng-select-container {
+    border-radius: 10px !important;
+}
+
+.bi {
+    font-size: 1.3rem;
+    transition: transform 0.2s;
+}
+
+.bi-chevron-up,
+.bi-chevron-down {
+    color: #71B0D9;
+}
+
+
+.selected-filters {
+    border-left: 5px solid #71b0d9;
+    background: linear-gradient(135deg, #f0faff, #fefefe);
+
+    .filter-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h6 {
+            color: #71b0d9;
+        }
+    }
+}
+
+
+.count-row {
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+}
+
+.count-box-wrapper {
+    min-width: 160px;
+    max-width: 100%;
+}
+
+@media (max-width: 992px) {
+    .count-row {
+        flex-wrap: wrap;
+    }
+
+    .count-box-wrapper {
+        flex: 1 1 45%;
+    }
+}
+
+@media (max-width: 576px) {
+    .count-box-wrapper {
+        flex: 1 1 100%;
+    }
 }
