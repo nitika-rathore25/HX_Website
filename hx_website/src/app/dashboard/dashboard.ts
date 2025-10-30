@@ -75,6 +75,8 @@ export class Dashboard implements OnInit {
     this.selectedFilters = {};
     this.agent_count = null;
     this.showTable = false;
+    this.columns = [];
+    this.agents = [];
     this.toastr.info('Filters cleared!', 'Notice');
   }
 

@@ -19,7 +19,7 @@
                     <div class="row g-4">
                         <ngx-spinner bdColor="rgba(255,255,255,0.9)" size="medium" color="#71B0D9"
                             type="ball-spin-fade">
-                            <p class="mt-3 fw-semibold text-primary">Filters are fetching...</p>
+                            <p class="mt-3 fw-semibold text-primary">Processing....</p>
                         </ngx-spinner>
 
                         <div class="col-md-6" *ngFor="let filter of filters">
@@ -29,15 +29,16 @@
                             </div>
 
                             <!-- SINGLE SELECT -->
-                            <ng-select *ngIf="filter.type === 'Single'" [items]="filter.options" bindLabel="value"
+                            <!-- <ng-select *ngIf="filter.type === 'Single'" [items]="filter.options" bindLabel="value"
                                 bindValue="key" [(ngModel)]="selectedFilters[filter.name]"
-                                placeholder="Select {{ filter.name }}" class="custom-select"></ng-select>
+                                placeholder="Select {{ filter.name }}" class="custom-select"></ng-select> -->
 
                             <!-- MULTI SELECT -->
-                            <ng-select *ngIf="filter.type === 'Multi'" [items]="filter.options" bindLabel="value"
-                                bindValue="key" [(ngModel)]="selectedFilters[filter.name]" [multiple]="true"
-                                [closeOnSelect]="false" [searchable]="true" [clearable]="false"
-                                placeholder="Select {{ filter.name }}" class="custom-select"></ng-select>
+                            <!-- *ngIf="filter.type === 'Multi'"  -->
+                            <ng-select [items]="filter.options" bindLabel="value" bindValue="key"
+                                [(ngModel)]="selectedFilters[filter.name]" [multiple]="true" [closeOnSelect]="false"
+                                [searchable]="true" [clearable]="false" placeholder="Select {{ filter.name }}"
+                                class="custom-select"></ng-select>
                         </div>
                     </div>
 
