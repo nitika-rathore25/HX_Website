@@ -71,7 +71,11 @@ export class Dashboard implements OnInit {
         this.showTable = false;
 
         // this.agent_count = response?.agent_count ?? 0;
-        this.filterCount.agent_count = response?.agent_count ?? 0;
+        this.filterCount.agent_count = response?.agent_count;
+        this.filterCount.hx_contact = response?.hx_contact;
+        this.filterCount.hx_transaction = response?.hx_transaction;
+        this.filterCount.hx_transaction_revenue = response?.hx_transaction_revenue;
+        this.filterCount.not_in_hx_contact = response?.not_in_hx_contact;
         this.toastr.success('Filters applied!', 'Success');
         this.agentTable?.clearSearch();
 
@@ -89,6 +93,10 @@ export class Dashboard implements OnInit {
   clearFilters(): void {
     this.selectedFilters = {};
     this.filterCount.agent_count = null;
+    this.filterCount.hx_contact = null;
+    this.filterCount.hx_transaction = null;
+    this.filterCount.hx_transaction_revenue = null;
+    this.filterCount.not_in_hx_contact = null;
     this.showTable = false;
     this.columns = [];
     this.agents = [];
